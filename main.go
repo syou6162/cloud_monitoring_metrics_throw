@@ -101,7 +101,10 @@ func main() {
 		}
 		metrics = append(metrics, metric)
 	}
-	if err := throwMetrics(ctx, *client, desc, metrics); err != nil {
-		log.Fatal(err)
+
+	if len(metrics) != 0 {
+		if err := throwMetrics(ctx, *client, desc, metrics); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
