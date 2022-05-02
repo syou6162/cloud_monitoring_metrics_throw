@@ -33,33 +33,38 @@ func getMetricDescriptor(ctx context.Context, client monitoring.MetricClient, pr
 	return desc, nil
 }
 
-func throwMetrics(ctx context.Context, client monitoring.MetricClient, desc *metric.MetricDescriptor, labels map[string]string, value float64) error {
-	pt := monitoringpb.Point{
-		Interval: &monitoringpb.TimeInterval{
-			EndTime: &timestamp.Timestamp{
-				Seconds: time.Now().Unix(),
+func throwMetrics(ctx context.Context, client monitoring.MetricClient, desc *metric.MetricDescriptor, metrics []CustomMertic) error {
+	timeSeries := make([]*monitoringpb.TimeSeries, 0)
+	for _, m := range metrics {
+		pt := monitoringpb.Point{
+			Interval: &monitoringpb.TimeInterval{
+				EndTime: &timestamp.Timestamp{
+					Seconds: time.Now().Unix(),
+				},
 			},
-		},
-		Value: &monitoringpb.TypedValue{
-			Value: &monitoringpb.TypedValue_Int64Value{Int64Value: int64(value)},
-		},
+			Value: &monitoringpb.TypedValue{
+				Value: &monitoringpb.TypedValue_Int64Value{Int64Value: int64(m.Value)},
+			},
+		}
+
+		ts := monitoringpb.TimeSeries{
+			Metric: &metric.Metric{
+				Type:   desc.Type,
+				Labels: m.Labels,
+			},
+			Resource: &monitoredres.MonitoredResource{
+				Type: "global",
+			},
+			MetricKind: desc.MetricKind,
+			ValueType:  desc.ValueType,
+			Points:     []*monitoringpb.Point{&pt},
+		}
+		timeSeries = append(timeSeries, &ts)
 	}
 
-	ts := monitoringpb.TimeSeries{
-		Metric: &metric.Metric{
-			Type:   desc.Type,
-			Labels: labels,
-		},
-		Resource: &monitoredres.MonitoredResource{
-			Type: "global",
-		},
-		MetricKind: desc.MetricKind,
-		ValueType:  desc.ValueType,
-		Points:     []*monitoringpb.Point{&pt},
-	}
 	req := &monitoringpb.CreateTimeSeriesRequest{
 		Name:       desc.Name,
-		TimeSeries: []*monitoringpb.TimeSeries{&ts},
+		TimeSeries: timeSeries,
 	}
 
 	return client.CreateTimeSeries(ctx, req)
@@ -83,6 +88,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	metrics := make([]CustomMertic, 0)
 	stdin := bufio.NewScanner(os.Stdin)
 	for stdin.Scan() {
 		if err := stdin.Err(); err != nil {
@@ -93,8 +99,9 @@ func main() {
 		if err := json.Unmarshal(stdin.Bytes(), &metric); err != nil {
 			log.Fatal(err)
 		}
-		if err := throwMetrics(ctx, *client, desc, metric.Labels, metric.Value); err != nil {
-			log.Fatal(err)
-		}
+		metrics = append(metrics, metric)
+	}
+	if err := throwMetrics(ctx, *client, desc, metrics); err != nil {
+		log.Fatal(err)
 	}
 }
