@@ -1,6 +1,6 @@
 module github.com/syou6162/cloud_monitoring_metrics_throw
 
-go 1.16
+go 1.18
 
 require (
 	cloud.google.com/go/monitoring v1.5.0
