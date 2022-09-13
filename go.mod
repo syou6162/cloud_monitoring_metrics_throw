@@ -5,7 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go/monitoring v1.6.0
 	github.com/golang/protobuf v1.5.2
-	google.golang.org/genproto v0.0.0-20220822174746-9e6da59bd2fc
+	google.golang.org/genproto v0.0.0-20220913154956-18f8339a66a5
 )
 
 require (
