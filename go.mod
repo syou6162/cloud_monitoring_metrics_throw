@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/monitoring v1.24.2
 	github.com/golang/protobuf v1.5.4
 	google.golang.org/genproto v0.0.0-20250528174236-200df99c418a
-	google.golang.org/genproto/googleapis/api v0.0.0-20250519155744-55703ea1f237
+	google.golang.org/genproto/googleapis/api v0.0.0-20250528174236-200df99c418a
 )
 
 require (
