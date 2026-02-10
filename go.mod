@@ -2,7 +2,7 @@ module github.com/syou6162/cloud_monitoring_metrics_throw
 
 go 1.24.0
 
-toolchain go1.25.3
+toolchain go1.26.0
 
 require (
 	cloud.google.com/go/monitoring v1.24.3
