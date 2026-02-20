@@ -1,6 +1,6 @@
 module github.com/syou6162/cloud_monitoring_metrics_throw
 
-go 1.24.0
+go 1.25.0
 
 toolchain go1.25.3
 
@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/monitoring v1.24.3
 	github.com/golang/protobuf v1.5.4
 	google.golang.org/genproto v0.0.0-20250728155136-f173205681a0
-	google.golang.org/genproto/googleapis/api v0.0.0-20260209200024-4cfbd4190f57
+	google.golang.org/genproto/googleapis/api v0.0.0-20260217215200-42d3e9bedb6d
 )
 
 require (
@@ -33,7 +33,7 @@ require (
 	golang.org/x/text v0.28.0 // indirect
 	golang.org/x/time v0.12.0 // indirect
 	google.golang.org/api v0.247.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260203192932-546029d2fa20 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260209200024-4cfbd4190f57 // indirect
 	google.golang.org/grpc v1.74.2 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
