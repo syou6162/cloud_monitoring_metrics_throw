@@ -7,7 +7,7 @@ toolchain go1.25.3
 require (
 	cloud.google.com/go/monitoring v1.24.3
 	github.com/golang/protobuf v1.5.4
-	google.golang.org/genproto v0.0.0-20250728155136-f173205681a0
+	google.golang.org/genproto v0.0.0-20260911204522-f61a6ca850bd
 	google.golang.org/genproto/googleapis/api v0.0.0-20260209200024-4cfbd4190f57
 )
 
